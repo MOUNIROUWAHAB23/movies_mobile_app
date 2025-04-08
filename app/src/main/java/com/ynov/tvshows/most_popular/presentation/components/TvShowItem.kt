@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,27 +27,29 @@ import com.ynov.tvshows.most_popular.domain.model.TvShow
 @Composable
 fun TvShowItem(
     tvShow: TvShow,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(8.dp)
             .fillMaxWidth()
             .clickable(onClick = onClick),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column {
+            // Image avec ratio 16:9
             Box(
                 modifier = Modifier
-                    .height(200.dp)
                     .fillMaxWidth()
+                    .aspectRatio(16f / 9f)
             ) {
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(tvShow.imageUrl)
-                        .crossfade(true)
+                        .crossfade(300)
                         .build(),
-                    contentDescription = tvShow.name,
+                    contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
                 )
@@ -63,17 +66,17 @@ fun TvShowItem(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = tvShow.network ?: "Inconnu",
+                    text = tvShow.network ?: "Network inconnu",
                     style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = tvShow.status,
-                    style = MaterialTheme.typography.bodySmall
+                    text = "Statut : ${tvShow.status}",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
                 )
             }
         }

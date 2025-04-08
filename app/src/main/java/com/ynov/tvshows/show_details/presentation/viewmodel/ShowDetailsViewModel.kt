@@ -26,31 +26,46 @@ class ShowDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             _state.value = ShowDetailsState(isLoading = true)
             try {
-                // Remplacer les espaces par des tirets et mettre en minuscule
-                val formattedShowName = showName.replace(" ", "-").lowercase()
-                // Encodage de l'URL
-                val encodedShowName = URLEncoder.encode(formattedShowName, "UTF-8")
+                // Nouveau formatage adapté aux caractères spéciaux
+                val formattedShowName = showName
+                    .replace(Regex("[']"), "") // Supprime uniquement les apostrophes
+                    .replace(
+                        Regex("[^a-zA-Z0-9-]"),
+                        "-"
+                    ) // Remplace autres caractères spéciaux par -
+                    .lowercase()
+                    .replace(Regex("-+"), "-") // Supprime les tirets multiples
 
-                Timber.d("Loading show details for: $encodedShowName") // Vérification
+                // Mapping spécifique pour les séries problématiques
+                val apiName = when {
+                    formattedShowName.contains("stranger-things") -> "montauk"
+                    formattedShowName.contains("daredevil") -> "daredevil"
+                    formattedShowName.contains("marvels-agents-of-s-h-i-e-l-d") -> "marvel-s-agents-of-s-h-i-e-l-d" // <-- SOLUTION
+                    else -> formattedShowName
+                }.let {
+                    // Encodage final pour les caractères restants
+                    URLEncoder.encode(it, "UTF-8").replace("+", "-") // Convertit les + en -
+                }
 
-                val details = getShowDetailsUseCase(encodedShowName)
+                Timber.d("Requête API avec : apiName=$apiName")
+                val details = getShowDetailsUseCase(apiName)
+
                 _state.value = ShowDetailsState(showDetails = details)
 
             } catch (e: Exception) {
-                Timber.e(e, "Erreur lors du chargement des détails")
+                Timber.e(e, "Erreur technique")
                 _state.value = ShowDetailsState(
                     error = when {
-                        e.message?.contains("HTTP 429") == true -> "Serveur surchargé"
-                        e.message?.contains("invalide") == true -> "Données corrompues"
-                        e.message?.contains("vide") == true -> "Aucun détail trouvé"
-                        else -> "Erreur de chargement"
+                        e.message?.contains("404") == true -> "Série non trouvée"
+                        e.message?.contains("429") == true -> "Limite d'appels atteinte"
+                        else -> "Erreur technique : ${e.localizedMessage}" // Message plus générique
                     }
                 )
             }
         }
     }
 }
-data class ShowDetailsState(
+    data class ShowDetailsState(
     val showDetails: ShowDetails? = null,
     val isLoading: Boolean = false,
     val error: String? = null
