@@ -13,6 +13,65 @@
 
 Créer une application Android utilisant Jetpack Compose pour lister les émissions TV populaires, effectuer une recherche, et afficher les détails d'une émission sélectionnée.
 Architecture basée sur MVVM et Clean Architecture.
+
+▶️ Lancer le Projet sur Android Studio
+
+Voici les étapes pour cloner, importer et exécuter le projet dans Android Studio :
+1. ✅ Prérequis
+
+Assurez-vous d’avoir installé :
+
+    Android Studio Giraffe (ou version plus récente).
+
+    JDK 17.
+
+    Plugin Kotlin à jour.
+
+    Connexion Internet (pour télécharger les dépendances Gradle).
+
+2. 📦 Cloner le projet
+
+git clone https://github.com/MOUNIROUWAHAB23/movies_mobile_app.git
+
+3. 📂 Ouvrir le projet dans Android Studio
+
+    Ouvrez Android Studio.
+
+    Cliquez sur "Open".
+
+    Sélectionnez le dossier du projet cloné.
+
+    Attendez la synchronisation Gradle automatique.
+
+4. 🔄 Synchroniser Gradle (si nécessaire)
+
+Si la synchronisation ne se fait pas automatiquement :
+
+    Allez dans File > Sync Project with Gradle Files.
+
+5. 🧪 Exécuter l’application
+
+    Connectez un appareil Android (ou lancez un émulateur).
+
+    Cliquez sur Run ▶️ dans la barre supérieure.
+
+    Choisissez l’appareil de destination.(ex : emulateur Pixel 5 Api 36) ps : Api doit être > 34
+
+    L'application devrait se lancer automatiquement sur l'écran d’accueil.
+
+6. 🧰 En cas de problèmes
+
+    Essayez un Clean & Rebuild Project :
+    Build > Clean Project puis Build > Rebuild Project.
+
+    Vérifiez les mises à jour dans :
+    File > Project Structure > Project SDK.
+
+    Assurez-vous que le fichier local.properties contient le bon chemin vers le SDK Android :
+
+sdk.dir=/chemin/vers/android-sdk
+
+
 🛠️ Technologies Utilisées
 
     Jetpack Compose : Interface utilisateur moderne et déclarative.
