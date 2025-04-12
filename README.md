@@ -13,6 +13,19 @@
 
 Créer une application Android utilisant Jetpack Compose pour lister les émissions TV populaires, effectuer une recherche, et afficher les détails d'une émission sélectionnée.
 Architecture basée sur MVVM et Clean Architecture.
+🛠️ Technologies Utilisées
+
+    Jetpack Compose : Interface utilisateur moderne et déclarative.
+
+    MVVM (Model-View-ViewModel) : Séparation claire des responsabilités.
+
+    Clean Architecture : Code modulaire et maintenable.
+
+    Retrofit : Appels réseau.
+
+    Dagger-Hilt : Injection de dépendances.
+
+    Coil : Chargement des images.
 
 ▶️ Lancer le Projet sur Android Studio
 
@@ -72,19 +85,16 @@ Si la synchronisation ne se fait pas automatiquement :
 sdk.dir=/chemin/vers/android-sdk
 
 
-🛠️ Technologies Utilisées
 
-    Jetpack Compose : Interface utilisateur moderne et déclarative.
 
-    MVVM (Model-View-ViewModel) : Séparation claire des responsabilités.
 
-    Clean Architecture : Code modulaire et maintenable.
 
-    Retrofit : Appels réseau.
 
-    Dagger-Hilt : Injection de dépendances.
 
-    Coil : Chargement des images.
+
+
+
+
 
 ⚙️ Plugins Gradle
 settings.gradle.kts
